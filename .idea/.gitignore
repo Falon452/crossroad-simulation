@@ -1,0 +1,45 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+/build
+
+# IntelliJ IDEA specific files
+.idea/
+*.iml
+*.iws
+
+# Gradle specific files
+.gradle/
+build/
+.gradle/
+gradle-wrapper.jar
+gradle-wrapper.properties
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+*.DS_Store
+
+# OS specific files
+Thumbs.db
+Desktop.ini
+
+# Java specific
+*.class
+
+# Other
+*.jar
+*.war
+*.ear
+*.db
+*.sql
+*.sqlite
+*.pid
+*.pid.lock
