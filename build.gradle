@@ -1,0 +1,35 @@
+// Apply the Java plugin to add support for Java
+plugins {
+    id 'java'
+    id 'application'
+}
+
+// Set the Java version compatibility
+java {
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
+}
+
+// Define the group and version for your project
+group = 'com.falon.crossroad'
+version = '1.0-SNAPSHOT'
+
+// Repositories where dependencies can be found
+repositories {
+    mavenCentral()
+}
+
+// Declare the dependencies for your project
+dependencies {
+    // RxJava dependency
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+}
+
+// Define any tasks or configurations for your build
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainClass.set('com.falon.crossroad.CrossroadProgram')
+}
