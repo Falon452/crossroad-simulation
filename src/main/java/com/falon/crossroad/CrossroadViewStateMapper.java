@@ -2,6 +2,7 @@ package com.falon.crossroad;
 
 
 import com.falon.crossroad.model.Cell;
+import com.falon.crossroad.model.TrafficLightColor;
 import com.falon.crossroad.viewstate.CellItem;
 import com.falon.crossroad.viewstate.CrossroadViewState;
 
@@ -21,17 +22,31 @@ public class CrossroadViewStateMapper {
     }
 
     private CellItem from(Cell cell) {
-        Color color;
+        Color cellColor = getCellColor(cell);
+        Color circleColor = getCellCircleColor(cell.trafficLightColor);
 
-        if (cell.hasCar()) {
-            return new CellItem(new Color(0, 51, 102));
+        return new CellItem(cellColor, circleColor);
+    }
+
+    private Color getCellColor(Cell cell) {
+        if (cell.hasACar) {
+            return new Color(0, 51, 102);
         }
 
-        switch (cell.type) {
-            case STREET -> color = new Color(64, 64, 64);
-            case GRASS -> color = new Color(34, 139, 34);
-            default -> throw new IllegalStateException("Unexpected value: " + cell.type);
+        return switch (cell.type) {
+            case STREET -> new Color(64, 64, 64);
+            case GRASS -> new Color(34, 139, 34);
+        };
+    }
+
+    private Color getCellCircleColor(TrafficLightColor trafficLightColor) {
+        if (trafficLightColor == null) {
+            return null;
         }
-        return new CellItem(color);
+
+        return switch (trafficLightColor) {
+            case RED -> new Color(255, 51, 51);
+            case GREEN -> new Color(0, 204, 0);
+        };
     }
 }

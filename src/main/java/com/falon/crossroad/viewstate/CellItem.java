@@ -4,10 +4,13 @@ import java.awt.*;
 
 public class CellItem {
 
-    public Color color;
+    public Color squareColor;
 
-    public CellItem(Color color) {
-        this.color = color;
+    public Color circleColor;
+
+    public CellItem(Color squareColor, Color circleColor) {
+        this.squareColor = squareColor;
+        this.circleColor = (circleColor != null) ? circleColor : squareColor;
     }
 }
 

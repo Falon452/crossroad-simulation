@@ -12,6 +12,7 @@
 .idea/
 *.iml
 *.iws
+idea/
 
 # Gradle specific files
 .gradle/

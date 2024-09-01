@@ -57,8 +57,15 @@ public class CrossroadView extends JComponent implements ComponentListener {
             CellItem[][] cellItems = viewState.cellItems;
             for (x = 0; x < cellItems.length; ++x) {
                 for (y = 0; y < cellItems[x].length; ++y) {
-                    g.setColor(cellItems[x][y].color);
+                    CellItem cellItem = cellItems[x][y];
+                    g.setColor(cellItem.squareColor);
                     g.fillRect((x * CELL_SIZE) + 1, (y * CELL_SIZE) + 1, (CELL_SIZE - 1), (CELL_SIZE - 1));
+
+                    g.setColor(cellItem.circleColor);
+                    int circleDiameter = CELL_SIZE / 2;
+                    int circleX = (x * CELL_SIZE) + (CELL_SIZE - circleDiameter) / 2;
+                    int circleY = (y * CELL_SIZE) + (CELL_SIZE - circleDiameter) / 2;
+                    g.fillOval(circleX, circleY, circleDiameter, circleDiameter);
                 }
             }
         }

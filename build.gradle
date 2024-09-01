@@ -2,12 +2,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 // Set the Java version compatibility
 java {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
 }
 
 // Define the group and version for your project
@@ -23,6 +22,7 @@ repositories {
 dependencies {
     // RxJava dependency
     implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 // Define any tasks or configurations for your build
@@ -32,4 +32,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainClass.set('com.falon.crossroad.CrossroadProgram')
+}
+kotlin {
+    jvmToolchain(16)
 }
