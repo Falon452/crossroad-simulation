@@ -7,10 +7,8 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
-public class CrossroadView extends JComponent implements ComponentListener {
+public class CrossroadView extends JComponent {
 
     private final static int CELL_SIZE = 20;
     private final CrossroadViewModel crossroadViewModel;
@@ -21,8 +19,7 @@ public class CrossroadView extends JComponent implements ComponentListener {
 
     public CrossroadView(CrossroadViewModel crossroadViewModel) {
         this.crossroadViewModel = crossroadViewModel;
-        addComponentListener(this);
-        setBackground(Color.WHITE);
+        setBackground(new Color(220, 238, 251));
         setOpaque(true);
     }
 
@@ -71,12 +68,6 @@ public class CrossroadView extends JComponent implements ComponentListener {
         }
     }
 
-    public void componentResized(ComponentEvent e) {
-//        int length = (this.getWidth() / size) + 1;
-//        int height = (this.getHeight() / size) + 1;
-//        initialize(length, height);
-    }
-
     @Override
     public void addNotify() {
         super.addNotify();
@@ -95,10 +86,4 @@ public class CrossroadView extends JComponent implements ComponentListener {
             viewStateDisposable.dispose();
         }
     }
-
-    public void componentShown(ComponentEvent e) {}
-
-    public void componentMoved(ComponentEvent e) {}
-
-    public void componentHidden(ComponentEvent e) {}
 }
