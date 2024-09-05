@@ -1,10 +1,11 @@
-package com.falon.crossroad;
+package com.falon.crossroad.presentation.mapper;
 
 
-import com.falon.crossroad.model.Cell;
-import com.falon.crossroad.model.TrafficLightColor;
-import com.falon.crossroad.viewstate.CellItem;
-import com.falon.crossroad.viewstate.CrossroadViewState;
+import com.falon.crossroad.domain.model.Cell;
+import com.falon.crossroad.domain.model.TrafficLightColor;
+import com.falon.crossroad.presentation.state.CrossroadState;
+import com.falon.crossroad.presentation.viewstate.CellItem;
+import com.falon.crossroad.presentation.viewstate.CrossroadViewState;
 
 import java.awt.*;
 

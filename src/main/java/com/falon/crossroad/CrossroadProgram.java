@@ -1,6 +1,6 @@
 package com.falon.crossroad;
 
-import com.falon.crossroad.ui.CrossroadPanel;
+import com.falon.crossroad.presentation.ui.CrossroadPanel;
 
 import javax.swing.*;
 

@@ -1,13 +1,13 @@
-package com.falon.crossroad.model;
+package com.falon.crossroad.domain.model;
 
-import static com.falon.crossroad.model.DirectionType.*;
+import static com.falon.crossroad.domain.model.DirectionType.*;
 
 public class Car {
 
     private final DirectionType direction;
     private final int x;
     private final int y;
-    private static int VELOCITY_IN_CELLS = 1;
+    private static final int VELOCITY_IN_CELLS = 1;
 
     public Car(int x, int y, DirectionType direction) {
         this.x = x;

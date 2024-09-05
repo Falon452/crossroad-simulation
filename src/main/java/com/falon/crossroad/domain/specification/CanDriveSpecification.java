@@ -1,7 +1,7 @@
-package com.falon.crossroad.specification;
+package com.falon.crossroad.domain.specification;
 
-import com.falon.crossroad.model.Cell;
-import com.falon.crossroad.model.TrafficLightColor;
+import com.falon.crossroad.domain.model.Cell;
+import com.falon.crossroad.domain.model.TrafficLightColor;
 
 public class CanDriveSpecification {
 

@@ -1,4 +1,4 @@
-package com.falon.crossroad.model;
+package com.falon.crossroad.domain.model;
 
 import io.reactivex.rxjava3.annotations.Nullable;
 
@@ -15,8 +15,11 @@ public class Cell {
 
     private final int x;
     private final int y;
+    public int turnX;
+    public int turnY;
+    public TurnType turnType;
     private final Random random = new Random();
-
+    public int occursInProbabilityFrom0To100 = 25;
 
     public Cell(CellType type, int x, int y) {
         this.type = type;
@@ -25,15 +28,20 @@ public class Cell {
     }
 
     @Nullable
-    public Car spawnACarIfLucky() {
-        if (canSpawnCars && occursWith25PercentProbability()) {
-            return new Car(x, y, spawnedCarDirection);
+    public Driver spawnADriverIfLucky() {
+        if (canSpawnCars && occursWithProbability()) {
+            return new Driver(
+                new Car(x, y, spawnedCarDirection),
+                turnX,
+                turnY,
+                turnType
+            );
         } else {
             return null;
         }
     }
 
-    private boolean occursWith25PercentProbability() {
-        return random.nextInt(4) < 1;
+    private boolean occursWithProbability() {
+        return random.nextInt(100) < occursInProbabilityFrom0To100;
     }
 }

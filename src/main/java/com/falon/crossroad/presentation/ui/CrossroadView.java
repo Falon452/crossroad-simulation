@@ -1,8 +1,8 @@
-package com.falon.crossroad.ui;
+package com.falon.crossroad.presentation.ui;
 
-import com.falon.crossroad.viewstate.CellItem;
-import com.falon.crossroad.viewmodel.CrossroadViewModel;
-import com.falon.crossroad.viewstate.CrossroadViewState;
+import com.falon.crossroad.presentation.viewstate.CellItem;
+import com.falon.crossroad.presentation.viewmodel.CrossroadViewModel;
+import com.falon.crossroad.presentation.viewstate.CrossroadViewState;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 import javax.swing.*;

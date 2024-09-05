@@ -1,4 +1,4 @@
-package com.falon.crossroad.ui;
+package com.falon.crossroad.presentation.ui;
 
 import javax.swing.*;
 import java.awt.*;

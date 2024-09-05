@@ -1,4 +1,4 @@
-package com.falon.crossroad.viewstate;
+package com.falon.crossroad.presentation.viewstate;
 
 import java.awt.*;
 

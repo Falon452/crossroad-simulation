@@ -1,8 +1,9 @@
-package com.falon.crossroad.ui;
+package com.falon.crossroad.presentation.ui;
 
 import com.falon.crossroad.CrossroadProgram;
-import com.falon.crossroad.model.ActionCommand;
-import com.falon.crossroad.viewmodel.CrossroadViewModel;
+import com.falon.crossroad.domain.model.ActionCommand;
+import com.falon.crossroad.presentation.viewmodel.CrossroadViewModel;
+
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -10,7 +11,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 
 public class CrossroadPanel extends JPanel implements ActionListener, ChangeListener {
 
@@ -24,6 +24,11 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
     private static final int INIT_DELAY = 100;
     private boolean running = false;
 
+    private JSlider trafficEastSlider;
+    private JSlider trafficSouthSlider;
+    private JSlider trafficWestSlider;
+    private JSlider trafficNorthSlider;
+
     public CrossroadPanel(JFrame jf) {
         frame = jf;
         timer = new Timer(INIT_DELAY, this);
@@ -35,26 +40,48 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
         container.setSize(new Dimension(CrossroadProgram.WIDTH, CrossroadProgram.HEIGHT));
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        buttonPanel.setLayout(new GridLayout(2, 1, 20, 10)); // Changed layout to GridLayout with 2 rows and 1 column
 
-        start = createStyledButton("Start");
+        // First row panel for the start button and main slider
+        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+
+        start = createStyledButton();
         start.setActionCommand(ActionCommand.TOGGLE_START.toString());
         start.addActionListener(this);
 
         slider = createStyledSlider();
         slider.setMinimum(0);
         slider.setMaximum(maxDelay);
-        slider.addChangeListener(this);
         slider.setValue(maxDelay - timer.getDelay());
 
-        buttonPanel.add(start);
-        buttonPanel.add(slider);
+        controlPanel.add(start);
+        controlPanel.add(slider);
+
+        // Second row panel for traffic sliders
+        JPanel trafficSliderPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 4));
+
+        trafficEastSlider = createStyledSlider();
+        trafficSouthSlider = createStyledSlider();
+        trafficWestSlider = createStyledSlider();
+        trafficNorthSlider = createStyledSlider();
+
+        trafficSliderPanel.add(new JLabel("Traffic East"));
+        trafficSliderPanel.add(trafficEastSlider);
+        trafficSliderPanel.add(new JLabel("Traffic South"));
+        trafficSliderPanel.add(trafficSouthSlider);
+        trafficSliderPanel.add(new JLabel("Traffic West"));
+        trafficSliderPanel.add(trafficWestSlider);
+        trafficSliderPanel.add(new JLabel("Traffic North"));
+        trafficSliderPanel.add(trafficNorthSlider);
+
+        // Add both panels to the main buttonPanel
+        buttonPanel.add(controlPanel);
+        buttonPanel.add(trafficSliderPanel);
 
         CrossroadView crossroadView = new CrossroadView(crossroadViewModel);
         container.add(crossroadView, BorderLayout.CENTER);
         container.add(buttonPanel, BorderLayout.SOUTH);
     }
-
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(timer)) {
             iterate();
@@ -85,11 +112,21 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
     }
 
     public void stateChanged(ChangeEvent e) {
-        timer.setDelay(maxDelay - slider.getValue());
+        if (e.getSource() == slider) {
+            timer.setDelay(maxDelay - slider.getValue());
+        } else if (e.getSource() == trafficEastSlider) {
+            crossroadViewModel.onTrafficEastSliderChange(trafficEastSlider.getValue());
+        } else if (e.getSource() == trafficSouthSlider) {
+            crossroadViewModel.onTrafficSouthSliderChange(trafficSouthSlider.getValue());
+        } else if (e.getSource() == trafficWestSlider) {
+            crossroadViewModel.onTrafficWestSliderChange(trafficWestSlider.getValue());
+        } else if (e.getSource() == trafficNorthSlider) {
+            crossroadViewModel.onTrafficNorthSliderChange(trafficNorthSlider.getValue());
+        }
     }
 
-    private JButton createStyledButton(String text) {
-        RoundedButton button = new RoundedButton(text);
+    private JButton createStyledButton() {
+        RoundedButton button = new RoundedButton("Start");
         button.setFont(new Font("Arial", Font.PLAIN, 14));
         button.setBackground(new Color(70, 130, 180));
         button.setForeground(Color.WHITE);
@@ -100,6 +137,7 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
 
     private JSlider createStyledSlider() {
         JSlider slider = new JSlider();
+        slider.addChangeListener(this);
         slider.setUI(new javax.swing.plaf.metal.MetalSliderUI() {
             @Override
             public void paintThumb(Graphics g) {

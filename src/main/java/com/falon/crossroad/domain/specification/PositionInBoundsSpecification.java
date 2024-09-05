@@ -1,4 +1,4 @@
-package com.falon.crossroad.specification;
+package com.falon.crossroad.domain.specification;
 
 public class PositionInBoundsSpecification {
 
