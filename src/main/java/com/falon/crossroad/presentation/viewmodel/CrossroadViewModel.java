@@ -1,12 +1,12 @@
 package com.falon.crossroad.presentation.viewmodel;
 
+import com.falon.crossroad.domain.strategy.BusiestLaneFirstStrategy;
 import com.falon.crossroad.presentation.state.CrossroadState;
 import com.falon.crossroad.presentation.mapper.CrossroadViewStateMapper;
 import com.falon.crossroad.presentation.factory.CrossroadStateFactory;
 
 import com.falon.crossroad.domain.model.Driver;
 import com.falon.crossroad.domain.model.TrafficLight;
-import com.falon.crossroad.domain.strategy.FixedIterationCountStrategy;
 import com.falon.crossroad.domain.strategy.TrafficStrategy;
 import com.falon.crossroad.presentation.viewstate.CrossroadViewState;
 import io.reactivex.rxjava3.core.Observable;
@@ -16,13 +16,12 @@ import static com.falon.crossroad.domain.model.CellsSize.CELLS_IN_HEIGHT;
 import static com.falon.crossroad.domain.model.CellsSize.CELLS_IN_WIDTH;
 import static com.falon.crossroad.domain.model.LaneType.*;
 
-
 public class CrossroadViewModel {
 
     private CrossroadState state = new CrossroadStateFactory().create();
     private final PublishSubject<CrossroadViewState> viewState = PublishSubject.create();
     private final CrossroadViewStateMapper viewStateMapper = new CrossroadViewStateMapper();
-    private final TrafficStrategy trafficStrategy = new FixedIterationCountStrategy();
+    private final TrafficStrategy trafficStrategy = new BusiestLaneFirstStrategy();
 
 
     public CrossroadViewModel() {
