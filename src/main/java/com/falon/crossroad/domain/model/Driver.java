@@ -5,11 +5,8 @@ import com.falon.crossroad.domain.specification.PositionInBoundsSpecification;
 import io.reactivex.rxjava3.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
 public class Driver {
 
-    private final Random random = new Random();
     private Car car;
     private final CanDriveSpecification canDriveSpec = new CanDriveSpecification();
     private final PositionInBoundsSpecification positionInBoundsSpec = new PositionInBoundsSpecification();

@@ -61,7 +61,7 @@ public class BusiestLaneFirstStrategy implements TrafficStrategy {
             case NORTH_ENABLED -> {
                 if (shouldChangeActiveLane(carCounts.get(NORTH_ENABLED))) {
                     if (state.trafficEnabledLaneType == NORTH_ENABLED) {
-                        prepareForChangingActiveLane(busiestLane, state);
+                        prepareForChangingActiveLane(state);
                     }
                 } else {
                     keepActiveLane();
@@ -72,7 +72,7 @@ public class BusiestLaneFirstStrategy implements TrafficStrategy {
             }
             case WEST_ENABLED -> {
                 if (shouldChangeActiveLane(carCounts.get(WEST_ENABLED))) {
-                    prepareForChangingActiveLane(busiestLane, state);
+                    prepareForChangingActiveLane(state);
                 } else {
                     keepActiveLane();
                     northIterationsWaiting++;
@@ -82,7 +82,7 @@ public class BusiestLaneFirstStrategy implements TrafficStrategy {
             }
             case SOUTH_ENABLED -> {
                 if (shouldChangeActiveLane(carCounts.get(SOUTH_ENABLED))) {
-                    prepareForChangingActiveLane(busiestLane, state);
+                    prepareForChangingActiveLane(state);
                 } else {
                     keepActiveLane();
                     northIterationsWaiting++;
@@ -92,7 +92,7 @@ public class BusiestLaneFirstStrategy implements TrafficStrategy {
             }
             case EAST_ENABLED -> {
                 if (shouldChangeActiveLane(carCounts.get(EAST_ENABLED))) {
-                    prepareForChangingActiveLane(busiestLane, state);
+                    prepareForChangingActiveLane(state);
                 } else {
                     keepActiveLane();
                     northIterationsWaiting++;
@@ -193,22 +193,17 @@ public class BusiestLaneFirstStrategy implements TrafficStrategy {
 
     private TrafficEnabledLaneType getBusiestLane(Map<TrafficEnabledLaneType, Integer> carCounts) {
         if (northIterationsWaiting > MAX_ITERATIONS_WAITING) {
-            System.out.println("MAX ITERAITONS NORTH");
             return NORTH_ENABLED;
         }
         if (southIterationsWaiting > MAX_ITERATIONS_WAITING) {
-            System.out.println("MAX ITER SOUTH_ENABLED");
             return SOUTH_ENABLED;
         }
         if (westIterationsWaiting > MAX_ITERATIONS_WAITING) {
-            System.out.println("MAX ITER WEST_ENABLED");
             return WEST_ENABLED;
         }
         if (eastIterationsWaiting > MAX_ITERATIONS_WAITING) {
-            System.out.println("MAX ITER EAST_ENABLED");
             return EAST_ENABLED;
         }
-        System.out.println("BUSIESTLINE");
 
         return carCounts
             .entrySet()
@@ -218,7 +213,7 @@ public class BusiestLaneFirstStrategy implements TrafficStrategy {
             .getKey();
     }
 
-    private void prepareForChangingActiveLane(TrafficEnabledLaneType nextActiveLane, CrossroadState state) {
+    private void prepareForChangingActiveLane(CrossroadState state) {
         setActiveLane(state, ALL_DISABLED);
         activeLaneIterations = 0;
         redLightIterations = 0;

@@ -8,18 +8,22 @@ import com.falon.crossroad.presentation.viewstate.CellItem;
 import com.falon.crossroad.presentation.viewstate.CrossroadViewState;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 public class CrossroadViewStateMapper {
 
     public CrossroadViewState from(CrossroadState state) {
-        CrossroadViewState crossroadViewState = new CrossroadViewState();
-        crossroadViewState.cellItems = new CellItem[state.cells.length][state.cells[0].length];
+        CrossroadViewState viewState = new CrossroadViewState();
+        viewState.cellItems = new CellItem[state.cells.length][state.cells[0].length];
+        Double averageCarsPerIteration = state.carsDriven / (double) state.iteration;
+        String formattedAverageCarsPerIteration = new DecimalFormat("#.##").format(averageCarsPerIteration);
+        viewState.averageCarsPerIteration = "Average cars per iteration: " + formattedAverageCarsPerIteration;
         for (int x = 0; x < state.cells.length; ++x) {
             for (int y = 0; y < state.cells[x].length; ++y) {
-                crossroadViewState.cellItems[x][y] = from(state.cells[x][y]);
+                viewState.cellItems[x][y] = from(state.cells[x][y]);
             }
         }
-        return crossroadViewState;
+        return viewState;
     }
 
     private CellItem from(Cell cell) {

@@ -14,6 +14,7 @@ public class CrossroadState {
     public ArrayList<TrafficLight> trafficLights;
     public TrafficEnabledLaneType trafficEnabledLaneType;
     public int iteration = 0;
+    public int carsDriven = 0;
 
     public CrossroadState newStateWithCopiedCellsAndEmptyCars() {
         CrossroadState newState = new CrossroadState();
@@ -22,6 +23,7 @@ public class CrossroadState {
         newState.trafficLights = trafficLights;
         newState.trafficEnabledLaneType = trafficEnabledLaneType;
         newState.iteration = iteration;
+        newState.carsDriven = carsDriven;
         return newState;
     }
 }

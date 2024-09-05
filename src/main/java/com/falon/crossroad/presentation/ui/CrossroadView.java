@@ -15,12 +15,13 @@ public class CrossroadView extends JComponent {
     private Disposable viewStateDisposable;
 
     private CrossroadViewState viewState;
+    private final JLabel averageCarsPerIterationLabel;
 
-
-    public CrossroadView(CrossroadViewModel crossroadViewModel) {
+    public CrossroadView(CrossroadViewModel crossroadViewModel, JLabel averageCarsPerIterationLabel) {
         this.crossroadViewModel = crossroadViewModel;
         setBackground(new Color(220, 238, 251));
         setOpaque(true);
+        this.averageCarsPerIterationLabel = averageCarsPerIterationLabel;
     }
 
     protected void paintComponent(Graphics g) {
@@ -74,6 +75,7 @@ public class CrossroadView extends JComponent {
         if (viewStateDisposable == null || viewStateDisposable.isDisposed()) {
             viewStateDisposable = crossroadViewModel.viewStateObservable().subscribe(items -> {
                 this.viewState = items;
+                averageCarsPerIterationLabel.setText("Average cars per iteration: " + viewState.averageCarsPerIteration);
                 repaint();
             });
         }

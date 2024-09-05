@@ -47,6 +47,8 @@ public class CrossroadViewModel {
             Driver newDriver = driver.onIterate(state.cells);
             if (newDriver != null) {
                 newState.drivers.add(newDriver);
+            } else {
+                newState.carsDriven++;
             }
         }
 
@@ -98,7 +100,9 @@ public class CrossroadViewModel {
         state.cells[LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS.index()][0].spawnDriverOccursInPercent = value;
     }
 
-    public void setStrategy(TrafficStrategy trafficStrategy) {
+    public void onSetStrategy(TrafficStrategy trafficStrategy) {
         this.trafficStrategy = trafficStrategy;
+        state.carsDriven = 0;
+        state.iteration = 0;
     }
 }

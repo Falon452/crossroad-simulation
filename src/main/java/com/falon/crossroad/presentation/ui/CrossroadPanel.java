@@ -32,11 +32,15 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
     private JSlider trafficWestSlider;
     private JSlider trafficNorthSlider;
     private JComboBox<String> strategyPicker;
+    private final JLabel averageCarsPerIterationLabel;
 
     public CrossroadPanel(JFrame jf) {
         frame = jf;
         timer = new Timer(INIT_DELAY, this);
         timer.stop();
+        averageCarsPerIterationLabel = new JLabel("Average cars per iteration: 0.0");
+        averageCarsPerIterationLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        averageCarsPerIterationLabel.setForeground(Color.BLACK);
     }
 
     public void initialize(Container container) {
@@ -89,8 +93,9 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
         buttonPanel.add(controlPanel);
         buttonPanel.add(trafficSliderPanel);
         buttonPanel.add(strategyPanel);
+        buttonPanel.add(averageCarsPerIterationLabel);
 
-        CrossroadView crossroadView = new CrossroadView(crossroadViewModel);
+        CrossroadView crossroadView = new CrossroadView(crossroadViewModel, averageCarsPerIterationLabel);
         container.add(crossroadView, BorderLayout.CENTER);
         container.add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -107,9 +112,9 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
     private void updateStrategy() {
         String selectedStrategy = (String) strategyPicker.getSelectedItem();
         if (StrategyItem.FIXED_ITERARTIONS.stringPresentation.equals(selectedStrategy)) {
-            crossroadViewModel.setStrategy(new FixedIterationCountStrategy());
+            crossroadViewModel.onSetStrategy(new FixedIterationCountStrategy());
         } else if (StrategyItem.BUSIEST.stringPresentation.equals(selectedStrategy)) {
-            crossroadViewModel.setStrategy(new BusiestLaneFirstStrategy());
+            crossroadViewModel.onSetStrategy(new BusiestLaneFirstStrategy());
         }
     }
 
