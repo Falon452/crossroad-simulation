@@ -1,6 +1,6 @@
 package com.falon.crossroad.presentation.viewmodel;
 
-import com.falon.crossroad.domain.strategy.BusiestLaneFirstStrategy;
+import com.falon.crossroad.domain.strategy.FixedIterationCountStrategy;
 import com.falon.crossroad.presentation.state.CrossroadState;
 import com.falon.crossroad.presentation.mapper.CrossroadViewStateMapper;
 import com.falon.crossroad.presentation.factory.CrossroadStateFactory;
@@ -21,7 +21,7 @@ public class CrossroadViewModel {
     private CrossroadState state = new CrossroadStateFactory().create();
     private final PublishSubject<CrossroadViewState> viewState = PublishSubject.create();
     private final CrossroadViewStateMapper viewStateMapper = new CrossroadViewStateMapper();
-    private final TrafficStrategy trafficStrategy = new BusiestLaneFirstStrategy();
+    private TrafficStrategy trafficStrategy = new FixedIterationCountStrategy();
 
 
     public CrossroadViewModel() {
@@ -79,22 +79,26 @@ public class CrossroadViewModel {
     }
 
     public void onTrafficEastSliderChange(int value) {
-        state.cells[CELLS_IN_WIDTH - 1][LANE_FROM_EAST_TO_WEST.index()].occursInProbabilityFrom0To100 = value;
-        state.cells[CELLS_IN_WIDTH - 1][LANE_FROM_EAST_TO_WEST_CLOSER_TO_GRASS.index()].occursInProbabilityFrom0To100 = value;
+        state.cells[CELLS_IN_WIDTH - 1][LANE_FROM_EAST_TO_WEST.index()].spawnDriverOccursInPercent = value;
+        state.cells[CELLS_IN_WIDTH - 1][LANE_FROM_EAST_TO_WEST_CLOSER_TO_GRASS.index()].spawnDriverOccursInPercent = value;
     }
 
     public void onTrafficSouthSliderChange(int value) {
-        state.cells[LANE_FROM_SOUTH_TO_NORTH.index()][CELLS_IN_HEIGHT - 1].occursInProbabilityFrom0To100 = value;
-        state.cells[LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS.index()][CELLS_IN_HEIGHT - 1].occursInProbabilityFrom0To100 = value;
+        state.cells[LANE_FROM_SOUTH_TO_NORTH.index()][CELLS_IN_HEIGHT - 1].spawnDriverOccursInPercent = value;
+        state.cells[LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS.index()][CELLS_IN_HEIGHT - 1].spawnDriverOccursInPercent = value;
     }
 
     public void onTrafficWestSliderChange(int value) {
-        state.cells[0][LANE_FROM_WEST_TO_EAST.index()].occursInProbabilityFrom0To100 = value;
-        state.cells[0][LANE_FROM_WEST_TO_EAST_CLOSER_TO_GRASS.index()].occursInProbabilityFrom0To100 = value;
+        state.cells[0][LANE_FROM_WEST_TO_EAST.index()].spawnDriverOccursInPercent = value;
+        state.cells[0][LANE_FROM_WEST_TO_EAST_CLOSER_TO_GRASS.index()].spawnDriverOccursInPercent = value;
     }
 
     public void onTrafficNorthSliderChange(int value) {
-        state.cells[LANE_FROM_NORTH_TO_SOUTH.index()][0].occursInProbabilityFrom0To100 = value;
-        state.cells[LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS.index()][0].occursInProbabilityFrom0To100 = value;
+        state.cells[LANE_FROM_NORTH_TO_SOUTH.index()][0].spawnDriverOccursInPercent = value;
+        state.cells[LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS.index()][0].spawnDriverOccursInPercent = value;
+    }
+
+    public void setStrategy(TrafficStrategy trafficStrategy) {
+        this.trafficStrategy = trafficStrategy;
     }
 }

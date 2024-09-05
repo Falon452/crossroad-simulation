@@ -19,7 +19,7 @@ public class Cell {
     public int turnY;
     public TurnType turnType;
     private final Random random = new Random();
-    public int occursInProbabilityFrom0To100 = 15;
+    public int spawnDriverOccursInPercent;
 
     public Cell(CellType type, int x, int y) {
         this.type = type;
@@ -42,7 +42,7 @@ public class Cell {
     }
 
     private boolean occursWithProbability() {
-        return random.nextInt(100) < occursInProbabilityFrom0To100;
+        return random.nextInt(100) < spawnDriverOccursInPercent;
     }
 
     private TurnType randomTurnOrRideForward() {

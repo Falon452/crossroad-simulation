@@ -2,6 +2,9 @@ package com.falon.crossroad.presentation.ui;
 
 import com.falon.crossroad.CrossroadProgram;
 import com.falon.crossroad.domain.model.ActionCommandType;
+import com.falon.crossroad.domain.strategy.BusiestLaneFirstStrategy;
+import com.falon.crossroad.domain.strategy.FixedIterationCountStrategy;
+import com.falon.crossroad.presentation.model.StrategyItem;
 import com.falon.crossroad.presentation.viewmodel.CrossroadViewModel;
 
 
@@ -28,6 +31,7 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
     private JSlider trafficSouthSlider;
     private JSlider trafficWestSlider;
     private JSlider trafficNorthSlider;
+    private JComboBox<String> strategyPicker;
 
     public CrossroadPanel(JFrame jf) {
         frame = jf;
@@ -40,9 +44,8 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
         container.setSize(new Dimension(CrossroadProgram.WIDTH, CrossroadProgram.HEIGHT));
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(2, 1, 20, 10)); // Changed layout to GridLayout with 2 rows and 1 column
+        buttonPanel.setLayout(new GridLayout(2, 1, 20, 10));
 
-        // First row panel for the start button and main slider
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
         start = createStyledButton();
@@ -57,13 +60,16 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
         controlPanel.add(start);
         controlPanel.add(slider);
 
-        // Second row panel for traffic sliders
         JPanel trafficSliderPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 4));
 
         trafficEastSlider = createStyledSlider();
         trafficSouthSlider = createStyledSlider();
         trafficWestSlider = createStyledSlider();
         trafficNorthSlider = createStyledSlider();
+        trafficEastSlider.setValue(25);
+        trafficSouthSlider.setValue(8);
+        trafficNorthSlider.setValue(6);
+        trafficWestSlider.setValue(20);
 
         trafficSliderPanel.add(new JLabel("Traffic East"));
         trafficSliderPanel.add(trafficEastSlider);
@@ -74,9 +80,15 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
         trafficSliderPanel.add(new JLabel("Traffic North"));
         trafficSliderPanel.add(trafficNorthSlider);
 
-        // Add both panels to the main buttonPanel
+        JPanel strategyPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        strategyPicker = new JComboBox<>(new String[] { StrategyItem.FIXED_ITERARTIONS.stringPresentation, StrategyItem.BUSIEST.stringPresentation});
+        strategyPicker.addActionListener(this);
+        strategyPanel.add(new JLabel("Select Strategy:"));
+        strategyPanel.add(strategyPicker);
+
         buttonPanel.add(controlPanel);
         buttonPanel.add(trafficSliderPanel);
+        buttonPanel.add(strategyPanel);
 
         CrossroadView crossroadView = new CrossroadView(crossroadViewModel);
         container.add(crossroadView, BorderLayout.CENTER);
@@ -85,8 +97,19 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(timer)) {
             iterate();
+        } else if (e.getSource() == strategyPicker) {
+            updateStrategy();
         } else {
             performActionCommand(e);
+        }
+    }
+
+    private void updateStrategy() {
+        String selectedStrategy = (String) strategyPicker.getSelectedItem();
+        if (StrategyItem.FIXED_ITERARTIONS.stringPresentation.equals(selectedStrategy)) {
+            crossroadViewModel.setStrategy(new FixedIterationCountStrategy());
+        } else if (StrategyItem.BUSIEST.stringPresentation.equals(selectedStrategy)) {
+            crossroadViewModel.setStrategy(new BusiestLaneFirstStrategy());
         }
     }
 
