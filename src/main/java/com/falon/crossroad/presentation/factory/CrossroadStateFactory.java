@@ -209,7 +209,7 @@ public class CrossroadStateFactory {
     }
 
     private static void setTrafficLight(CrossroadState state, int x, int y, DirectionType directionPlacement, boolean canHaveRightGreenArrow) {
-        state.trafficLights.add(new TrafficLight(x, y, TrafficLightColor.RED, directionPlacement, canHaveRightGreenArrow));
-        state.cells[x][y].trafficLightColor = TrafficLightColor.RED;
+        state.trafficLights.add(new TrafficLight(x, y, TrafficLightColorType.RED, directionPlacement, canHaveRightGreenArrow));
+        state.cells[x][y].trafficLightColor = TrafficLightColorType.RED;
     }
 }

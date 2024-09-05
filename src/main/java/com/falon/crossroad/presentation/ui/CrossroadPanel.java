@@ -1,7 +1,7 @@
 package com.falon.crossroad.presentation.ui;
 
 import com.falon.crossroad.CrossroadProgram;
-import com.falon.crossroad.domain.model.ActionCommand;
+import com.falon.crossroad.domain.model.ActionCommandType;
 import com.falon.crossroad.presentation.viewmodel.CrossroadViewModel;
 
 
@@ -46,7 +46,7 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
         start = createStyledButton();
-        start.setActionCommand(ActionCommand.TOGGLE_START.toString());
+        start.setActionCommand(ActionCommandType.TOGGLE_START.toString());
         start.addActionListener(this);
 
         slider = createStyledSlider();
@@ -98,8 +98,8 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
 
     private void performActionCommand(ActionEvent e) {
         String command = e.getActionCommand();
-        ActionCommand actionCommand = ActionCommand.from(command);
-        switch (actionCommand) {
+        ActionCommandType actionCommandType = ActionCommandType.from(command);
+        switch (actionCommandType) {
             case TOGGLE_START -> {
                 if (!running) {
                     timer.start();

@@ -1,6 +1,6 @@
 package com.falon.crossroad.domain.model;
 
-public enum TrafficStrategyType {
+public enum TrafficEnabledLaneType {
     EAST_ENABLED,
     SOUTH_ENABLED,
     WEST_ENABLED,

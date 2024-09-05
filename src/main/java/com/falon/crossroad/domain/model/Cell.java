@@ -11,7 +11,7 @@ public class Cell {
     public boolean hasACar = false;
 
     @Nullable public DirectionType spawnedCarDirection;
-    @Nullable public TrafficLightColor trafficLightColor;
+    @Nullable public TrafficLightColorType trafficLightColor;
 
     private final int x;
     private final int y;

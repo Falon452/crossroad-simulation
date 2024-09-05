@@ -2,7 +2,7 @@ package com.falon.crossroad.presentation.mapper;
 
 
 import com.falon.crossroad.domain.model.Cell;
-import com.falon.crossroad.domain.model.TrafficLightColor;
+import com.falon.crossroad.domain.model.TrafficLightColorType;
 import com.falon.crossroad.presentation.state.CrossroadState;
 import com.falon.crossroad.presentation.viewstate.CellItem;
 import com.falon.crossroad.presentation.viewstate.CrossroadViewState;
@@ -40,12 +40,12 @@ public class CrossroadViewStateMapper {
         };
     }
 
-    private Color getCellCircleColor(TrafficLightColor trafficLightColor) {
-        if (trafficLightColor == null) {
+    private Color getCellCircleColor(TrafficLightColorType trafficLightColorType) {
+        if (trafficLightColorType == null) {
             return null;
         }
 
-        return switch (trafficLightColor) {
+        return switch (trafficLightColorType) {
             case GREEN_FOR_RIGHT -> new Color(0, 153, 0);
             case RED -> new Color(255, 51, 51);
             case GREEN -> new Color(0, 204, 0);

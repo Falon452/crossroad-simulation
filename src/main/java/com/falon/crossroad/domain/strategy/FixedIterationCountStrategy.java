@@ -3,8 +3,8 @@ package com.falon.crossroad.domain.strategy;
 import com.falon.crossroad.presentation.state.CrossroadState;
 import com.falon.crossroad.domain.model.DirectionType;
 import com.falon.crossroad.domain.model.TrafficLight;
-import com.falon.crossroad.domain.model.TrafficLightColor;
-import com.falon.crossroad.domain.model.TrafficStrategyType;
+import com.falon.crossroad.domain.model.TrafficLightColorType;
+import com.falon.crossroad.domain.model.TrafficEnabledLaneType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +19,8 @@ public class FixedIterationCountStrategy implements TrafficStrategy {
 
     @Override
     public void execute(CrossroadState state) {
-        updateTrafficStrategyType(state);
-        switch (state.trafficStrategyType) {
+        updateTrafficEnabledLane(state);
+        switch (state.trafficEnabledLaneType) {
             case EAST_ENABLED -> {
                 setGreenLightForAll(state, EAST);
                 setGreenArrowFor(state, Arrays.asList(WEST, SOUTH));
@@ -41,12 +41,24 @@ public class FixedIterationCountStrategy implements TrafficStrategy {
         }
     }
 
+    private static void updateTrafficEnabledLane(CrossroadState state) {
+        int strategiesCount = (TrafficEnabledLaneType.values().length - 1);
+        int iterationsForCycleOfStrategies = (ITERATIONS_PER_STRATEGY + ITERATIONS_PER_STRATEGY_CHANGE_DELAY) * strategiesCount;
+        int iteration = state.iteration % ITERATIONS_PER_STRATEGY_WITH_DELAY;
+        if (iteration < ITERATIONS_PER_STRATEGY) {
+            int indexOfStrategy = (state.iteration % iterationsForCycleOfStrategies) / ITERATIONS_PER_STRATEGY_WITH_DELAY;
+            state.trafficEnabledLaneType = TrafficEnabledLaneType.values()[indexOfStrategy];
+        } else {
+            state.trafficEnabledLaneType = TrafficEnabledLaneType.ALL_DISABLED;
+        }
+    }
+
     private static void setGreenLightForAll(CrossroadState state, DirectionType directionPlacement) {
         for (TrafficLight trafficLight : state.trafficLights) {
             if (trafficLight.directionPlacement == directionPlacement) {
-                trafficLight.color = TrafficLightColor.GREEN;
+                trafficLight.color = TrafficLightColorType.GREEN;
             } else {
-                trafficLight.color = TrafficLightColor.RED;
+                trafficLight.color = TrafficLightColorType.RED;
             }
         }
     }
@@ -54,26 +66,14 @@ public class FixedIterationCountStrategy implements TrafficStrategy {
     private static void setGreenArrowFor(CrossroadState state, List<DirectionType> directions) {
         for (TrafficLight trafficLight : state.trafficLights) {
             if (directions.contains(trafficLight.directionPlacement) && trafficLight.canBeGreenArrowForRight) {
-                trafficLight.color = TrafficLightColor.GREEN_FOR_RIGHT;
+                trafficLight.color = TrafficLightColorType.GREEN_FOR_RIGHT;
             }
         }
     }
 
     private static void setAllRed(CrossroadState state) {
         for (TrafficLight trafficLight : state.trafficLights) {
-            trafficLight.color = TrafficLightColor.RED;
-        }
-    }
-
-    private static void updateTrafficStrategyType(CrossroadState state) {
-        int strategiesCount = (TrafficStrategyType.values().length - 1);
-        int iterationsForCycleOfStrategies = (ITERATIONS_PER_STRATEGY + ITERATIONS_PER_STRATEGY_CHANGE_DELAY) * strategiesCount;
-        int iteration = state.iteration % ITERATIONS_PER_STRATEGY_WITH_DELAY;
-        if (iteration < ITERATIONS_PER_STRATEGY) {
-            int indexOfStrategy = (state.iteration % iterationsForCycleOfStrategies) / ITERATIONS_PER_STRATEGY_WITH_DELAY;
-            state.trafficStrategyType = TrafficStrategyType.values()[indexOfStrategy];
-        } else {
-            state.trafficStrategyType = TrafficStrategyType.ALL_DISABLED;
+            trafficLight.color = TrafficLightColorType.RED;
         }
     }
 }

@@ -1,11 +1,11 @@
 package com.falon.crossroad.domain.model;
 
-public enum ActionCommand {
+public enum ActionCommandType {
 
     TOGGLE_START,
     UNKNOWN;
 
-    public static ActionCommand from(String command) {
+    public static ActionCommandType from(String command) {
         if (command.equals("TOGGLE_START")) {
             return TOGGLE_START;
         }
