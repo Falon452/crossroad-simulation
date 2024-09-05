@@ -12,7 +12,10 @@ import com.falon.crossroad.presentation.viewstate.CrossroadViewState;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-import static com.falon.crossroad.presentation.factory.CrossroadStateFactory.*;
+import static com.falon.crossroad.domain.model.CellsSize.CELLS_IN_HEIGHT;
+import static com.falon.crossroad.domain.model.CellsSize.CELLS_IN_WIDTH;
+import static com.falon.crossroad.domain.model.LaneType.*;
+
 
 public class CrossroadViewModel {
 
@@ -77,22 +80,22 @@ public class CrossroadViewModel {
     }
 
     public void onTrafficEastSliderChange(int value) {
-        state.cells[CELLS_IN_WIDTH - 1][LANE_FROM_EAST_TO_WEST].occursInProbabilityFrom0To100 = value;
-        state.cells[CELLS_IN_WIDTH - 1][LANE_FROM_EAST_TO_WEST_CLOSER_TO_GRASS].occursInProbabilityFrom0To100 = value;
+        state.cells[CELLS_IN_WIDTH - 1][LANE_FROM_EAST_TO_WEST.index()].occursInProbabilityFrom0To100 = value;
+        state.cells[CELLS_IN_WIDTH - 1][LANE_FROM_EAST_TO_WEST_CLOSER_TO_GRASS.index()].occursInProbabilityFrom0To100 = value;
     }
 
     public void onTrafficSouthSliderChange(int value) {
-        state.cells[LANE_FROM_SOUTH_TO_NORTH][CELLS_IN_HEIGHT - 1].occursInProbabilityFrom0To100 = value;
-        state.cells[LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS][CELLS_IN_HEIGHT - 1].occursInProbabilityFrom0To100 = value;
+        state.cells[LANE_FROM_SOUTH_TO_NORTH.index()][CELLS_IN_HEIGHT - 1].occursInProbabilityFrom0To100 = value;
+        state.cells[LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS.index()][CELLS_IN_HEIGHT - 1].occursInProbabilityFrom0To100 = value;
     }
 
     public void onTrafficWestSliderChange(int value) {
-        state.cells[0][LANE_FROM_WEST_TO_EAST].occursInProbabilityFrom0To100 = value;
-        state.cells[0][LANE_FROM_WEST_TO_EAST_CLOSER_TO_GRASS].occursInProbabilityFrom0To100 = value;
+        state.cells[0][LANE_FROM_WEST_TO_EAST.index()].occursInProbabilityFrom0To100 = value;
+        state.cells[0][LANE_FROM_WEST_TO_EAST_CLOSER_TO_GRASS.index()].occursInProbabilityFrom0To100 = value;
     }
 
     public void onTrafficNorthSliderChange(int value) {
-        state.cells[LANE_FROM_NORTH_TO_SOUTH][0].occursInProbabilityFrom0To100 = value;
-        state.cells[LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS][0].occursInProbabilityFrom0To100 = value;
+        state.cells[LANE_FROM_NORTH_TO_SOUTH.index()][0].occursInProbabilityFrom0To100 = value;
+        state.cells[LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS.index()][0].occursInProbabilityFrom0To100 = value;
     }
 }
