@@ -19,7 +19,7 @@ public class Cell {
     public int turnY;
     public TurnType turnType;
     private final Random random = new Random();
-    public int occursInProbabilityFrom0To100 = 25;
+    public int occursInProbabilityFrom0To100 = 15;
 
     public Cell(CellType type, int x, int y) {
         this.type = type;
@@ -34,7 +34,7 @@ public class Cell {
                 new Car(x, y, spawnedCarDirection),
                 turnX,
                 turnY,
-                turnType
+                randomTurnOrRideForward()
             );
         } else {
             return null;
@@ -43,5 +43,13 @@ public class Cell {
 
     private boolean occursWithProbability() {
         return random.nextInt(100) < occursInProbabilityFrom0To100;
+    }
+
+    private TurnType randomTurnOrRideForward() {
+        if (random.nextInt(4) < 3) {
+            return turnType;
+        } else {
+            return TurnType.NO_TURN;
+        }
     }
 }

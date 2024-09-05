@@ -46,6 +46,7 @@ public class CrossroadViewStateMapper {
         }
 
         return switch (trafficLightColor) {
+            case GREEN_FOR_RIGHT -> new Color(0, 153, 0);
             case RED -> new Color(255, 51, 51);
             case GREEN -> new Color(0, 204, 0);
         };

@@ -16,10 +16,10 @@ public class CrossroadStateFactory {
     public final static int LANE_FROM_WEST_TO_EAST = 30;
     public final static int LANE_FROM_WEST_TO_EAST_CLOSER_TO_GRASS = 31;
 
-    public final static int LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS  = 28;
+    public final static int LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS = 28;
     public final static int LANE_FROM_NORTH_TO_SOUTH = 29;
     public final static int LANE_FROM_SOUTH_TO_NORTH = 30;
-    public final static int LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS  = 31;
+    public final static int LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS = 31;
 
     private final static int OFFSET_FROM_CROSSROAD = 1;
 
@@ -90,7 +90,7 @@ public class CrossroadStateFactory {
             LANE_FROM_NORTH_TO_SOUTH,
             0,
             SOUTH,
-                LANE_FROM_NORTH_TO_SOUTH,
+            LANE_FROM_NORTH_TO_SOUTH,
             LANE_FROM_WEST_TO_EAST,
             TurnType.LEFT
         );
@@ -100,7 +100,7 @@ public class CrossroadStateFactory {
             LANE_FROM_SOUTH_TO_NORTH,
             CELLS_IN_HEIGHT - 1,
             NORTH,
-                LANE_FROM_SOUTH_TO_NORTH,
+            LANE_FROM_SOUTH_TO_NORTH,
             LANE_FROM_EAST_TO_WEST,
             TurnType.LEFT
         );
@@ -154,54 +154,62 @@ public class CrossroadStateFactory {
             state,
             LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS + OFFSET_FROM_CROSSROAD,
             LANE_FROM_EAST_TO_WEST_CLOSER_TO_GRASS,
-                EAST
+            EAST,
+            true
         );
         setTrafficLight(
             state,
             LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS + OFFSET_FROM_CROSSROAD,
             LANE_FROM_EAST_TO_WEST,
-                EAST
+            EAST,
+            false
         );
         setTrafficLight(
             state,
             LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS - OFFSET_FROM_CROSSROAD,
             LANE_FROM_WEST_TO_EAST,
-                WEST
+            WEST,
+            false
         );
         setTrafficLight(
             state,
             LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS - OFFSET_FROM_CROSSROAD,
             LANE_FROM_WEST_TO_EAST_CLOSER_TO_GRASS,
-                WEST
+            WEST,
+            true
         );
         setTrafficLight(
             state,
             LANE_FROM_NORTH_TO_SOUTH_CLOSER_TO_GRASS,
             LANE_FROM_EAST_TO_WEST_CLOSER_TO_GRASS - OFFSET_FROM_CROSSROAD,
-                NORTH
+            NORTH,
+            true
         );
         setTrafficLight(
             state,
             LANE_FROM_NORTH_TO_SOUTH,
             LANE_FROM_EAST_TO_WEST_CLOSER_TO_GRASS - OFFSET_FROM_CROSSROAD,
-                NORTH
+            NORTH,
+            false
         );
         setTrafficLight(
             state,
             LANE_FROM_SOUTH_TO_NORTH,
             LANE_FROM_WEST_TO_EAST_CLOSER_TO_GRASS + OFFSET_FROM_CROSSROAD,
-                SOUTH
+            SOUTH,
+            false
         );
         setTrafficLight(
             state,
             LANE_FROM_SOUTH_TO_NORTH_CLOSER_TO_GRASS,
             LANE_FROM_WEST_TO_EAST_CLOSER_TO_GRASS + OFFSET_FROM_CROSSROAD,
-                SOUTH
+            SOUTH,
+            true
         );
     }
 
-    private static void setTrafficLight(CrossroadState state, int x, int y, DirectionType directionPlacement) {
-        state.trafficLights.add(new TrafficLight(x, y, TrafficLightColor.RED, directionPlacement));
+    private static void setTrafficLight(CrossroadState state, int x, int y, DirectionType directionPlacement, boolean canHaveRightGreenArrow) {
+        state.trafficLights.add(new TrafficLight(x, y, TrafficLightColor.RED, directionPlacement, canHaveRightGreenArrow));
         state.cells[x][y].trafficLightColor = TrafficLightColor.RED;
     }
 }

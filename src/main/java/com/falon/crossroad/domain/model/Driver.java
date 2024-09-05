@@ -33,10 +33,14 @@ public class Driver {
         return car.getY();
     }
 
+    public TurnType getTurnType() {
+        return turnType;
+    }
+
     @Nullable
     public Driver onIterate(Cell[][] cells) {
         Car turnedCar = car;
-        if (car.getX() == turnX && car.getY() == turnY && occursWith50PercentProbability()) {
+        if (car.getX() == turnX && car.getY() == turnY) {
             switch (turnType) {
                 case LEFT -> turnedCar = car.copyAndTurnLeft();
                 case RIGHT -> turnedCar = car.copyAndTurnRight();
@@ -59,16 +63,12 @@ public class Driver {
     @NotNull
     private Car driveIfPossibleAndGetNewCar(Cell nextCell) {
         Car newCar;
-        if (canDriveSpec.isSatisfiedBy(nextCell)) {
+        if (canDriveSpec.isSatisfiedBy(nextCell, this)) {
             newCar = car.copyAndDrive();
         } else {
             newCar = car.copyAndStop();
         }
 
         return newCar;
-    }
-
-    private boolean occursWith50PercentProbability() {
-        return random.nextInt(2) < 1;
     }
 }

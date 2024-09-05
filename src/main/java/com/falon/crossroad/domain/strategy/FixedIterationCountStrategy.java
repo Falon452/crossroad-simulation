@@ -6,6 +6,9 @@ import com.falon.crossroad.domain.model.TrafficLight;
 import com.falon.crossroad.domain.model.TrafficLightColor;
 import com.falon.crossroad.domain.model.TrafficStrategyType;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.falon.crossroad.domain.model.DirectionType.*;
 
 public class FixedIterationCountStrategy implements TrafficStrategy {
@@ -18,20 +21,40 @@ public class FixedIterationCountStrategy implements TrafficStrategy {
     public void execute(CrossroadState state) {
         updateTrafficStrategyType(state);
         switch (state.trafficStrategyType) {
-            case EAST_ENABLED -> setGreenLightFor(state, EAST);
-            case SOUTH_ENABLED -> setGreenLightFor(state, SOUTH);
-            case WEST_ENABLED -> setGreenLightFor(state, WEST);
-            case NORTH_ENABLED -> setGreenLightFor(state, NORTH);
+            case EAST_ENABLED -> {
+                setGreenLightForAll(state, EAST);
+                setGreenArrowFor(state, Arrays.asList(WEST, SOUTH));
+            }
+            case SOUTH_ENABLED -> {
+                setGreenLightForAll(state, SOUTH);
+                setGreenArrowFor(state, Arrays.asList(NORTH, WEST));
+            }
+            case WEST_ENABLED -> {
+                setGreenLightForAll(state, WEST);
+                setGreenArrowFor(state, Arrays.asList(NORTH, EAST));
+            }
+            case NORTH_ENABLED -> {
+                setGreenLightForAll(state, NORTH);
+                setGreenArrowFor(state, Arrays.asList(SOUTH, EAST));
+            }
             case ALL_DISABLED -> setAllRed(state);
         }
     }
 
-    private static void setGreenLightFor(CrossroadState state, DirectionType directionPlacement) {
+    private static void setGreenLightForAll(CrossroadState state, DirectionType directionPlacement) {
         for (TrafficLight trafficLight : state.trafficLights) {
             if (trafficLight.directionPlacement == directionPlacement) {
                 trafficLight.color = TrafficLightColor.GREEN;
             } else {
                 trafficLight.color = TrafficLightColor.RED;
+            }
+        }
+    }
+
+    private static void setGreenArrowFor(CrossroadState state, List<DirectionType> directions) {
+        for (TrafficLight trafficLight : state.trafficLights) {
+            if (directions.contains(trafficLight.directionPlacement) && trafficLight.canBeGreenArrowForRight) {
+                trafficLight.color = TrafficLightColor.GREEN_FOR_RIGHT;
             }
         }
     }
