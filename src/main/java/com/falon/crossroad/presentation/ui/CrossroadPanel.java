@@ -99,15 +99,18 @@ public class CrossroadPanel extends JPanel implements ActionListener, ChangeList
     private void performActionCommand(ActionEvent e) {
         String command = e.getActionCommand();
         ActionCommand actionCommand = ActionCommand.from(command);
-        if (actionCommand == ActionCommand.TOGGLE_START) {
-            if (!running) {
-                timer.start();
-                start.setText("Pause");
-            } else {
-                timer.stop();
-                start.setText("Start");
+        switch (actionCommand) {
+            case TOGGLE_START -> {
+                if (!running) {
+                    timer.start();
+                    start.setText("Pause");
+                } else {
+                    timer.stop();
+                    start.setText("Start");
+                }
+                running = !running;
             }
-            running = !running;
+            case UNKNOWN -> {}
         }
     }
 
