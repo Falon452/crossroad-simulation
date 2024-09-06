@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 public class Driver {
 
     private Car car;
-    private final CanDriveSpecification canDriveSpec = new CanDriveSpecification();
-    private final PositionInBoundsSpecification positionInBoundsSpec = new PositionInBoundsSpecification();
+    private final CanDriveSpecification canDriveSpec;
+    private final PositionInBoundsSpecification positionInBoundsSpec;
     private static final int INDEX_SHIFT = 1;
     private final int turnX;
     private final int turnY;
@@ -20,6 +20,24 @@ public class Driver {
         this.turnX = turnX;
         this.turnY = turnY;
         this.turnType = turnType;
+        this.canDriveSpec = new CanDriveSpecification();
+        this.positionInBoundsSpec = new PositionInBoundsSpecification();
+    }
+
+    public Driver(
+        Car car,
+        int turnX,
+        int turnY,
+        TurnType turnType,
+        CanDriveSpecification canDriveSpec,
+        PositionInBoundsSpecification positionInBoundsSpec
+    ) {
+        this.car = car;
+        this.turnX = turnX;
+        this.turnY = turnY;
+        this.turnType = turnType;
+        this.canDriveSpec = canDriveSpec;
+        this.positionInBoundsSpec = positionInBoundsSpec;
     }
 
     public int getX() {
@@ -28,6 +46,10 @@ public class Driver {
 
     public int getY() {
         return car.getY();
+    }
+
+    public Car getCar() {
+        return car;
     }
 
     public TurnType getTurnType() {
@@ -41,7 +63,8 @@ public class Driver {
             switch (turnType) {
                 case LEFT -> turnedCar = car.copyAndTurnLeft();
                 case RIGHT -> turnedCar = car.copyAndTurnRight();
-                default -> {}
+                default -> {
+                }
             }
         }
         car = turnedCar;

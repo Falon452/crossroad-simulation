@@ -63,6 +63,10 @@ public class Car {
         return y;
     }
 
+    public DirectionType getDirection() {
+        return direction;
+    }
+
     public int getNextPositionX() {
         switch (direction) {
             case EAST -> {
