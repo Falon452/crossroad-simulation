@@ -25,7 +25,7 @@ Green traffic light represents arrow for any direction.
 - cars are blue,
 - green light represents traffic light without collisons.
 - dark green light represents traffic light for right turn without collisions.
-- we can select traffic strategy in run time. Either FixedIterations - changes activate lane every predefined number of cycles. or busiest lane first, which prioritizes busiest lane, but also takes into consideration the lane that waited too long, has a minimum and maximum limit of active lane.
+- we can select traffic strategy in run time. Either FixedIterations - changes active lane every predefined number of cycles or busiest lane first, which prioritizes busiest lane, but also takes into consideration the lane that waited too long, has a minimum and maximum limit of active lane.
 - cars can turn left right or go forward
 - cars when outside of a map, then they are counted to statistic - averageCarsPerIteration which tells how many cars moved through crossroad.
 - you can increase simulation speed
