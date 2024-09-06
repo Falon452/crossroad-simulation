@@ -28,3 +28,15 @@ Green traffic light represents arrow for any direction.
 - we can select traffic strategy in run time. Either FixedIterations - changes activate lane every predefined number of cycles. or busiest lane first, which prioritizes busiest lane, but also takes into consideration the lane that waited too long, has a minimum and maximum limit of active lane.
 - cars can turn left right or go forward
 - cars when outside of a map, then they are counted to statistic - averageCarsPerIteration which tells how many cars moved through crossroad.
+
+## Architecture
+
+The project follows MVI architecture pattern and Clean Architecture (domain, presentation), also there are follwoing used patterns:
+- Factory,
+- Strategy,
+- Specification,
+- Observation
+
+## Test
+
+For tests I used mockito with junit5.
